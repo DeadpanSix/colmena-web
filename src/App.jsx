@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import DocumentsPage from './pages/DocumentsPage';
+import DocumentDetailPage from './pages/DocumentDetailPage';
 
 function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth();
@@ -37,6 +38,7 @@ function App() {
         >
           <Route path="/" element={<HomePage />} />
           <Route path="/documents" element={<DocumentsPage />} />
+          <Route path="/documents/:id" element={<DocumentDetailPage />} />
           <Route path="/dashboard" element={<DashboardPlaceholder />} />
         </Route>
       </Routes>
