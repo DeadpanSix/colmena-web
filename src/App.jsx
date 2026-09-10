@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import DocumentsPage from './pages/DocumentsPage';
 import DocumentDetailPage from './pages/DocumentDetailPage';
+import DashboardPage from './pages/DashboardPage';
 
 function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth();
@@ -18,10 +19,6 @@ function ProtectedRoute({ children }) {
   }
 
   return children;
-}
-
-function DashboardPlaceholder() {
-  return <div>Dashboard (placeholder)</div>;
 }
 
 function App() {
@@ -39,7 +36,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/documents" element={<DocumentsPage />} />
           <Route path="/documents/:id" element={<DocumentDetailPage />} />
-          <Route path="/dashboard" element={<DashboardPlaceholder />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
