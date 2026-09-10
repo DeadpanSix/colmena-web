@@ -1,0 +1,28 @@
+.metricsGrid {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.metricCard {
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 140px;
+}
+
+.metricLabel {
+  font-size: 13px;
+  color: #333;
+  margin: 0 0 4px;
+}
+
+.metricValue {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.chartContainer {
+  max-width: 600px;
+}
