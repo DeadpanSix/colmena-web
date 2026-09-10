@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import Layout from './components/Layout';
+import HomePage from './pages/HomePage';
+import DocumentsPage from './pages/DocumentsPage';
 
 function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth();
@@ -15,10 +17,6 @@ function ProtectedRoute({ children }) {
   }
 
   return children;
-}
-
-function DocumentsPlaceholder() {
-  return <div>Documents list (placeholder)</div>;
 }
 
 function DashboardPlaceholder() {
@@ -37,7 +35,8 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="/" element={<DocumentsPlaceholder />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/documents" element={<DocumentsPage />} />
           <Route path="/dashboard" element={<DashboardPlaceholder />} />
         </Route>
       </Routes>

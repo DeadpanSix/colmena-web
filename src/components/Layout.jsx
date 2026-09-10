@@ -9,18 +9,17 @@ export default function Layout() {
   }
 
   return (
-    <div>
-      <nav>
+    <div style={{ display: 'flex' }}>
+      <nav style={{ display: 'flex', flexDirection: 'column', minWidth: '200px' }}>
         <div>
-          <Link to="/">Documents</Link>
-          <Link to="/dashboard">Dashboard</Link>
+          <p>{user.name}</p>
+          <p>{user.role}</p>
         </div>
-        <div>
-          <span>{user.name} ({user.role})</span>
-          <button onClick={handleLogout}>Log out</button>
-        </div>
+        <button onClick={handleLogout}>Log out</button>
+        <Link to="/documents">Documents</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </nav>
-      <main>
+      <main style={{ flex: 1 }}>
         <Outlet />
       </main>
     </div>
