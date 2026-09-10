@@ -16,6 +16,21 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function DashboardPlaceholder() {
+  const { user, logout } = useAuth();
+
+  async function handleLogout() {
+    await logout();
+  }
+
+  return (
+    <div>
+      <p>Welcome, {user.name} ({user.role})</p>
+      <button onClick={handleLogout}>Log out</button>
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,7 +40,7 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <div>Dashboard placeholder (protected)</div>
+              <DashboardPlaceholder />
             </ProtectedRoute>
           }
         />
