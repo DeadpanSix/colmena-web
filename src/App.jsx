@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
+import Layout from './components/Layout';
+import HomePage from './pages/HomePage';
+import DocumentsPage from './pages/DocumentsPage';
 
 function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth();
@@ -17,18 +20,7 @@ function ProtectedRoute({ children }) {
 }
 
 function DashboardPlaceholder() {
-  const { user, logout } = useAuth();
-
-  async function handleLogout() {
-    await logout();
-  }
-
-  return (
-    <div>
-      <p>Welcome, {user.name} ({user.role})</p>
-      <button onClick={handleLogout}>Log out</button>
-    </div>
-  );
+  return <div>Dashboard (placeholder)</div>;
 }
 
 function App() {
@@ -37,13 +29,16 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route
-          path="/"
           element={
             <ProtectedRoute>
-              <DashboardPlaceholder />
+              <Layout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="/" element={<HomePage />} />
+          <Route path="/documents" element={<DocumentsPage />} />
+          <Route path="/dashboard" element={<DashboardPlaceholder />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
