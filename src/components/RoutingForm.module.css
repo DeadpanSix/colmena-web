@@ -1,0 +1,119 @@
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: #1d1d1b;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.select {
+  flex: 1;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid #d6d6d3;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #1d1d1b;
+  background: #fff;
+}
+
+.daysInput {
+  width: 90px;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid #d6d6d3;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #1d1d1b;
+}
+
+.select:focus,
+.daysInput:focus {
+  outline: none;
+  border-color: #1d1d1b;
+}
+
+.removeButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #a32d2d;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.removeButton:hover {
+  background: #fcebeb;
+}
+
+.addButton {
+  background: transparent;
+  border: none;
+  color: #378ADD;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-bottom: 1rem;
+}
+
+.addButton:hover {
+  text-decoration: underline;
+}
+
+.error {
+  font-size: 13px;
+  color: #791f1f;
+  background: #fcebeb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0 0 1rem;
+}
+
+.submitButton {
+  height: 38px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: #1d1d1b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submitButton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .select {
+    flex: 1 1 100%;
+  }
+
+  .daysInput {
+    flex: 1;
+    width: auto;
+  }
+}

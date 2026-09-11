@@ -8,6 +8,23 @@ import {
   cancelDocument,
 } from '../api/documents';
 import RoutingForm from '../components/RoutingForm';
+import styles from './DocumentDetailPage.module.css';
+
+const STATUS_LABELS = {
+  RECEIVED: 'Received',
+  IN_ROUTING: 'In routing',
+  PENDING_RESPONSE: 'Pending response',
+  RESPONDED: 'Responded',
+  CANCELLED: 'Cancelled',
+};
+
+const STATUS_CLASSES = {
+  RECEIVED: 'statusReceived',
+  IN_ROUTING: 'statusInRouting',
+  PENDING_RESPONSE: 'statusPendingResponse',
+  RESPONDED: 'statusResponded',
+  CANCELLED: 'statusCancelled',
+};
 
 export default function DocumentDetailPage() {
   const { id } = useParams();
@@ -93,66 +110,137 @@ export default function DocumentDetailPage() {
 
   return (
     <div>
-      <h1>{document.folio}</h1>
-      <p><strong>Title:</strong> {document.title}</p>
-      <p><strong>Type:</strong> {document.documentType.name}</p>
-      <p><strong>Origin:</strong> {document.originDepartment.name}</p>
-      <p><strong>Uploaded by:</strong> {document.uploadedBy.name}</p>
-      <p><strong>Status:</strong> {document.status}</p>
+      <div className={styles.header}>
+        <h1 className={styles.folio}>{document.folio}</h1>
+        <div className={styles.metaGrid}>
+          <div>
+            <p className={styles.metaLabel}>Title</p>
+            <p className={styles.metaValue}>{document.title}</p>
+          </div>
+          <div>
+            <p className={styles.metaLabel}>Type</p>
+            <p className={styles.metaValue}>{document.documentType.name}</p>
+          </div>
+          <div>
+            <p className={styles.metaLabel}>Origin</p>
+            <p className={styles.metaValue}>{document.originDepartment.name}</p>
+          </div>
+          <div>
+            <p className={styles.metaLabel}>Uploaded by</p>
+            <p className={styles.metaValue}>{document.uploadedBy.name}</p>
+          </div>
+          <div>
+            <p className={styles.metaLabel}>Status</p>
+            <span className={`${styles.status} ${styles[STATUS_CLASSES[document.status]]}`}>
+              {STATUS_LABELS[document.status]}
+            </span>
+          </div>
+        </div>
+      </div>
 
-      {actionError && <p style={{ color: 'red' }}>{actionError}</p>}
+      {actionError && <p className={styles.actionError}>{actionError}</p>}
 
-      <h2>Routing</h2>
-      <ul>
-        {document.routingSteps.map((step) => (
-          <li key={step.id}>
-            <p>Step {step.order}: {step.team.name} — {step.status}</p>
-            <p>Deadline: {new Date(step.deadline).toLocaleString()}</p>
-            {step.comment && <p>Comment: {step.comment}</p>}
-            {step.completedBy && <p>Completed by: {step.completedBy.name}</p>}
-          </li>
-        ))}
-      </ul>
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Routing</h2>
+        <div className={styles.stepsList}>
+          {document.routingSteps.map((step) => (
+            <div
+              key={step.id}
+              className={`${styles.stepCard} ${
+                step.status === 'COMPLETED' ? styles.stepCardCompleted : styles.stepCardPending
+              }`}
+            >
+              <div className={styles.stepHeader}>
+                <p className={styles.stepTitle}>
+                  Step {step.order}: {step.team.name}
+                </p>
+                <span
+                  className={`${styles.status} ${
+                    step.status === 'COMPLETED' ? styles.statusResponded : styles.statusInRouting
+                  }`}
+                >
+                  {step.status === 'COMPLETED' ? 'Completed' : 'Pending'}
+                </span>
+              </div>
+              <p className={styles.stepMeta}>
+                Deadline: {new Date(step.deadline).toLocaleString()}
+              </p>
+              {step.completedBy && (
+                <p className={styles.stepMeta}>Completed by: {step.completedBy.name}</p>
+              )}
+              {step.comment && <p className={styles.stepComment}>{step.comment}</p>}
+            </div>
+          ))}
+        </div>
+      </div>
 
       {canAssignRouting && (
-        <RoutingForm documentId={document.id} onSuccess={fetchDocument} />
+        <div className={styles.section}>
+          <div className={styles.formCard}>
+            <RoutingForm documentId={document.id} onSuccess={fetchDocument} />
+          </div>
+        </div>
       )}
 
       {canCompleteStep && (
-        <form onSubmit={handleCompleteStep}>
-          <h3>Complete step {nextPendingStep.order} ({nextPendingStep.team.name})</h3>
-          <textarea
-            value={stepComment}
-            onChange={(e) => setStepComment(e.target.value)}
-            placeholder="Your comment"
-            required
-          />
-          <button type="submit" disabled={isSubmitting}>Complete step</button>
-        </form>
+        <div className={styles.section}>
+          <div className={styles.formCard}>
+            <h3 className={styles.sectionTitle}>
+              Complete step {nextPendingStep.order} ({nextPendingStep.team.name})
+            </h3>
+            <form onSubmit={handleCompleteStep}>
+              <div className={styles.field}>
+                <label className={styles.label} htmlFor="stepComment">Comment</label>
+                <textarea
+                  id="stepComment"
+                  className={styles.textarea}
+                  value={stepComment}
+                  onChange={(e) => setStepComment(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className={styles.button} disabled={isSubmitting}>
+                Complete step
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
       {document.response && (
-        <div>
-          <h2>Response</h2>
-          <p>{document.response.content}</p>
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>Response</h2>
+          <div className={styles.responseCard}>
+            <p className={styles.responseText}>{document.response.content}</p>
+          </div>
         </div>
       )}
 
       {canRespond && (
-        <form onSubmit={handleRespond}>
-          <h3>Submit final response</h3>
-          <textarea
-            value={responseContent}
-            onChange={(e) => setResponseContent(e.target.value)}
-            placeholder="Response content"
-            required
-          />
-          <button type="submit" disabled={isSubmitting}>Submit response</button>
-        </form>
+        <div className={styles.section}>
+          <div className={styles.formCard}>
+            <h3 className={styles.sectionTitle}>Submit final response</h3>
+            <form onSubmit={handleRespond}>
+              <div className={styles.field}>
+                <label className={styles.label} htmlFor="responseContent">Response</label>
+                <textarea
+                  id="responseContent"
+                  className={styles.textarea}
+                  value={responseContent}
+                  onChange={(e) => setResponseContent(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className={styles.button} disabled={isSubmitting}>
+                Submit response
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
       {canCancel && (
-        <button onClick={handleCancel} disabled={isSubmitting}>
+        <button onClick={handleCancel} className={styles.dangerButton} disabled={isSubmitting}>
           Cancel document
         </button>
       )}
