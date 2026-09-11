@@ -1,0 +1,199 @@
+.header {
+  margin-bottom: 2rem;
+}
+
+.folio {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: #1d1d1b;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e5e5e2;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.metaLabel {
+  font-size: 12px;
+  color: #6b6b68;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 4px;
+}
+
+.metaValue {
+  font-size: 14px;
+  color: #1d1d1b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statusReceived { background: #e6f1fb; color: #0c447c; }
+.statusInRouting { background: #faeeda; color: #854f0b; }
+.statusPendingResponse { background: #faeeda; color: #854f0b; }
+.statusResponded { background: #eaf3de; color: #27500a; }
+.statusCancelled { background: #fcebeb; color: #791f1f; }
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: #1d1d1b;
+}
+
+.actionError {
+  font-size: 13px;
+  color: #791f1f;
+  background: #fcebeb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0 0 1rem;
+}
+
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepCard {
+  background: #fff;
+  border: 1px solid #e5e5e2;
+  border-left: 3px solid #d6d6d3;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.stepCardCompleted {
+  border-left-color: #639922;
+}
+
+.stepCardPending {
+  border-left-color: #ba7517;
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.stepTitle {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #1d1d1b;
+}
+
+.stepMeta {
+  font-size: 12px;
+  color: #6b6b68;
+  margin: 2px 0;
+}
+
+.stepComment {
+  font-size: 13px;
+  color: #3d3d3a;
+  margin: 6px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid #f0f0ee;
+}
+
+.formCard {
+  background: #fff;
+  border: 1px solid #e5e5e2;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3d3d3a;
+}
+
+.textarea {
+  min-height: 80px;
+  padding: 10px 12px;
+  border: 1px solid #d6d6d3;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #1d1d1b;
+}
+
+.button {
+  height: 38px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: #1d1d1b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dangerButton {
+  composes: button;
+  background: #a32d2d;
+}
+
+.responseCard {
+  background: #eaf3de;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.responseText {
+  font-size: 14px;
+  color: #1d1d1b;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 640px) {
+  .metaGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

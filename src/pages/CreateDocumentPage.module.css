@@ -1,0 +1,102 @@
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  color: #1d1d1b;
+}
+
+.formCard {
+  background: #fff;
+  border: 1px solid #e5e5e2;
+  border-radius: 10px;
+  padding: 1.5rem;
+  max-width: 480px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3d3d3a;
+}
+
+.input,
+.select {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #d6d6d3;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1d1d1b;
+  background: #fff;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #1d1d1b;
+}
+
+.fileInputWrapper {
+  border: 1px dashed #d6d6d3;
+  border-radius: 8px;
+  padding: 1.25rem;
+  text-align: center;
+  background: #fafaf9;
+}
+
+.fileInput {
+  font-size: 13px;
+  color: #3d3d3a;
+}
+
+.fileHint {
+  font-size: 12px;
+  color: #6b6b68;
+  margin: 6px 0 0;
+}
+
+.error {
+  font-size: 13px;
+  color: #791f1f;
+  background: #fcebeb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0 0 1rem;
+}
+
+.submitButton {
+  height: 42px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #1d1d1b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .formCard {
+    max-width: 100%;
+    padding: 1.25rem;
+  }
+}
