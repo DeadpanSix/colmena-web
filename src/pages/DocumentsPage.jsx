@@ -33,6 +33,7 @@ export default function DocumentsPage() {
   return (
     <div>
       <h1>Documents</h1>
+      <Link to="/documents/new">Create new document</Link>
       <table>
         <thead>
           <tr>

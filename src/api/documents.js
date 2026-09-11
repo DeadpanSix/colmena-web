@@ -24,3 +24,10 @@ export async function cancelDocument(documentId) {
   const response = await api.patch(`/documents/${documentId}/cancel`);
   return response.data;
 }
+
+export async function createDocument(formData) {
+  const response = await api.post('/documents', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+}
