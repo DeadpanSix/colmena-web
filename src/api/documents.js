@@ -31,3 +31,8 @@ export async function createDocument(formData) {
   });
   return response.data;
 }
+
+export async function assignRouting(documentId, steps) {
+  const response = await api.post(`/documents/${documentId}/routing`, { steps });
+  return response.data;
+}

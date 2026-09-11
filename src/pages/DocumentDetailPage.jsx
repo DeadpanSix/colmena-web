@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   getDocumentById,
@@ -7,11 +7,11 @@ import {
   respondToDocument,
   cancelDocument,
 } from '../api/documents';
+import RoutingForm from '../components/RoutingForm';
 
 export default function DocumentDetailPage() {
   const { id } = useParams();
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   const [document, setDocument] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +45,8 @@ export default function DocumentDetailPage() {
   const isUploader = document.uploadedBy.id === user.id;
   const canRespond = document.status === 'PENDING_RESPONSE' && isUploader;
   const canCancel = !['RESPONDED', 'CANCELLED'].includes(document.status) && isUploader;
+  const canAssignRouting =
+    user.role === 'ADMIN' && !['CANCELLED', 'RESPONDED'].includes(document.status);
 
   async function handleCompleteStep(event) {
     event.preventDefault();
@@ -111,6 +113,10 @@ export default function DocumentDetailPage() {
           </li>
         ))}
       </ul>
+
+      {canAssignRouting && (
+        <RoutingForm documentId={document.id} onSuccess={fetchDocument} />
+      )}
 
       {canCompleteStep && (
         <form onSubmit={handleCompleteStep}>
