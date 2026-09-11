@@ -15,11 +15,11 @@ import styles from './DashboardPage.module.css';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 const STATUS_LABELS = {
-  RECEIVED: 'Recibido',
-  IN_ROUTING: 'En turnado',
-  PENDING_RESPONSE: 'Pend. respuesta',
-  RESPONDED: 'Respondido',
-  CANCELLED: 'Cancelado',
+  RECEIVED: 'Received',
+  IN_ROUTING: 'In routing',
+  PENDING_RESPONSE: 'Pending response',
+  RESPONDED: 'Responded',
+  CANCELLED: 'Cancelled',
 };
 
 export default function DashboardPage() {
@@ -68,9 +68,10 @@ function AdminSummary({ data }) {
     labels: Object.keys(data.byStatus).map((key) => STATUS_LABELS[key] || key),
     datasets: [
       {
-        label: 'Documentos',
+        label: 'Documents',
         data: Object.values(data.byStatus),
         backgroundColor: '#378ADD',
+        borderRadius: 4,
       },
     ],
   };
@@ -79,9 +80,10 @@ function AdminSummary({ data }) {
     labels: data.byOriginDepartment.map((d) => d.departmentName),
     datasets: [
       {
-        label: 'Documentos',
+        label: 'Documents',
         data: data.byOriginDepartment.map((d) => d.count),
         backgroundColor: '#1D9E75',
+        borderRadius: 4,
       },
     ],
   };
@@ -94,24 +96,28 @@ function AdminSummary({ data }) {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1 className={styles.title}>Dashboard</h1>
 
       <div className={styles.metricsGrid}>
-        <MetricCard label="Total documentos" value={data.totalDocuments} color="#E6F1FB" />
-        <MetricCard label="Respondidos" value={data.byStatus.RESPONDED} color="#EAF3DE" />
-        <MetricCard label="Cancelados" value={data.byStatus.CANCELLED} color="#FCEBEB" />
-        <MetricCard label="Vencidos" value={data.overdueSteps} color="#FAEEDA" />
-        <MetricCard label="Por vencer" value={data.dueSoonSteps} color="#FAEEDA" />
+        <MetricCard label="Total documents" value={data.totalDocuments} color="#E6F1FB" />
+        <MetricCard label="Responded" value={data.byStatus.RESPONDED} color="#EAF3DE" />
+        <MetricCard label="Cancelled" value={data.byStatus.CANCELLED} color="#FCEBEB" />
+        <MetricCard label="Overdue" value={data.overdueSteps} color="#FCEBEB" />
+        <MetricCard label="Due soon" value={data.dueSoonSteps} color="#FAEEDA" />
       </div>
 
-      <h2>Documentos por estatus</h2>
-      <div className={styles.chartContainer}>
-        <Bar data={statusChartData} options={chartOptions} />
+      <h2 className={styles.sectionTitle}>Documents by status</h2>
+      <div className={styles.chartCard}>
+        <div className={styles.chartWrapper}>
+          <Bar data={statusChartData} options={chartOptions} />
+        </div>
       </div>
 
-      <h2>Documentos por procedencia</h2>
-      <div className={styles.chartContainer}>
-        <Bar data={originChartData} options={chartOptions} />
+      <h2 className={styles.sectionTitle}>Documents by origin department</h2>
+      <div className={styles.chartCard}>
+        <div className={styles.chartWrapper}>
+          <Bar data={originChartData} options={chartOptions} />
+        </div>
       </div>
     </div>
   );
@@ -120,25 +126,32 @@ function AdminSummary({ data }) {
 function TeamDashboard({ data }) {
   return (
     <div>
-      <h1>{data.teamName} Dashboard</h1>
+      <h1 className={styles.title}>{data.teamName} dashboard</h1>
 
       <div className={styles.metricsGrid}>
-        <MetricCard label="Pendientes" value={data.pendingSteps} color="#E6F1FB" />
-        <MetricCard label="Completados" value={data.completedSteps} color="#EAF3DE" />
-        <MetricCard label="Vencidos" value={data.overdueSteps} color="#FCEBEB" />
-        <MetricCard label="Por vencer" value={data.dueSoonSteps} color="#FAEEDA" />
+        <MetricCard label="Pending" value={data.pendingSteps} color="#E6F1FB" />
+        <MetricCard label="Completed" value={data.completedSteps} color="#EAF3DE" />
+        <MetricCard label="Overdue" value={data.overdueSteps} color="#FCEBEB" />
+        <MetricCard label="Due soon" value={data.dueSoonSteps} color="#FAEEDA" />
       </div>
 
-      <h2>Documentos</h2>
-      <ul>
-        {data.documents.map((doc) => (
-          <li key={`${doc.documentId}-${doc.stepOrder}`}>
-            {doc.folio} — {doc.title} — Step {doc.stepOrder} ({doc.stepStatus})
-            {doc.isOverdue && ' — OVERDUE'}
-            {doc.isDueSoon && ' — DUE SOON'}
-          </li>
-        ))}
-      </ul>
+      <h2 className={styles.sectionTitle}>Documents</h2>
+      <div className={styles.documentsList}>
+        {data.documents.length === 0 ? (
+          <p className={styles.emptyState}>No documents assigned to your team yet.</p>
+        ) : (
+          data.documents.map((doc) => (
+            <div key={`${doc.documentId}-${doc.stepOrder}`} className={styles.documentRow}>
+              <div className={styles.documentInfo}>
+                <span className={styles.documentFolio}>{doc.folio}</span>
+                <span className={styles.documentTitle}>{doc.title}</span>
+              </div>
+              {doc.isOverdue && <span className={`${styles.flag} ${styles.flagOverdue}`}>Overdue</span>}
+              {doc.isDueSoon && <span className={`${styles.flag} ${styles.flagDueSoon}`}>Due soon</span>}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
