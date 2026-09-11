@@ -1,0 +1,143 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+  color: #1d1d1b;
+}
+
+.createButton {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #1d1d1b;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.createButton:hover {
+  opacity: 0.9;
+}
+
+.tableWrapper {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e5e5e2;
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b6b68;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e5e2;
+}
+
+.table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #1d1d1b;
+  border-bottom: 1px solid #f0f0ee;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: #fafaf9;
+}
+
+.link {
+  color: #1d1d1b;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.link:hover {
+  color: #378ADD;
+}
+
+.link:hover .linkIcon {
+  transform: translateX(2px);
+}
+
+.linkIcon {
+  font-size: 13px;
+  color: #a3a39f;
+  transition: transform 0.15s ease;
+}
+
+.link:hover .linkIcon {
+  color: #378ADD;
+}
+
+.status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statusReceived {
+  background: #e6f1fb;
+  color: #0c447c;
+}
+
+.statusInRouting {
+  background: #faeeda;
+  color: #854f0b;
+}
+
+.statusPendingResponse {
+  background: #faeeda;
+  color: #854f0b;
+}
+
+.statusResponded {
+  background: #eaf3de;
+  color: #27500a;
+}
+
+.statusCancelled {
+  background: #fcebeb;
+  color: #791f1f;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .tableWrapper {
+    overflow-x: auto;
+  }
+
+  .table {
+    min-width: 600px;
+  }
+}

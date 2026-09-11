@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getTeams } from '../api/catalogs';
 import { assignRouting } from '../api/documents';
+import styles from './RoutingForm.module.css';
 
 export default function RoutingForm({ documentId, onSuccess }) {
   const [teams, setTeams] = useState([]);
@@ -58,10 +59,12 @@ export default function RoutingForm({ documentId, onSuccess }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Assign routing</h3>
+      <h3 className={styles.title}>Assign routing</h3>
+
       {steps.map((step, index) => (
-        <div key={index}>
+        <div key={index} className={styles.row}>
           <select
+            className={styles.select}
             value={step.teamId}
             onChange={(e) => updateStep(index, 'teamId', e.target.value)}
             required
@@ -77,27 +80,35 @@ export default function RoutingForm({ documentId, onSuccess }) {
             type="number"
             min="1"
             placeholder="Days"
+            className={styles.daysInput}
             value={step.days}
             onChange={(e) => updateStep(index, 'days', e.target.value)}
             required
           />
           {steps.length > 1 && (
-            <button type="button" onClick={() => removeStep(index)}>
-              Remove
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={() => removeStep(index)}
+              aria-label="Remove step"
+            >
+              ×
             </button>
           )}
         </div>
       ))}
 
-      <button type="button" onClick={addStep}>
-        Add another team
+      <button type="button" className={styles.addButton} onClick={addStep}>
+        + Add another team
       </button>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Assigning...' : 'Assign routing'}
-      </button>
+      <div>
+        <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+          {isSubmitting ? 'Assigning...' : 'Assign routing'}
+        </button>
+      </div>
     </form>
   );
 }

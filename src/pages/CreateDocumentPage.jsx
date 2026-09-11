@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDocumentTypes, getDepartments } from '../api/catalogs';
 import { createDocument } from '../api/documents';
+import styles from './CreateDocumentPage.module.css';
 
 export default function CreateDocumentPage() {
   const navigate = useNavigate();
@@ -67,70 +68,80 @@ export default function CreateDocumentPage() {
 
   return (
     <div>
-      <h1>Create document</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input
-            id="title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
+      <h1 className={styles.title}>Create document</h1>
 
-        <div>
-          <label htmlFor="documentType">Document type</label>
-          <select
-            id="documentType"
-            value={documentTypeId}
-            onChange={(e) => setDocumentTypeId(e.target.value)}
-            required
-          >
-            <option value="">Select a type</option>
-            {documentTypes.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className={styles.formCard}>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="title">Title</label>
+            <input
+              id="title"
+              type="text"
+              className={styles.input}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="originDepartment">Origin department</label>
-          <select
-            id="originDepartment"
-            value={originDepartmentId}
-            onChange={(e) => setOriginDepartmentId(e.target.value)}
-            required
-          >
-            <option value="">Select a department</option>
-            {departments.map((dept) => (
-              <option key={dept.id} value={dept.id}>
-                {dept.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="documentType">Document type</label>
+            <select
+              id="documentType"
+              className={styles.select}
+              value={documentTypeId}
+              onChange={(e) => setDocumentTypeId(e.target.value)}
+              required
+            >
+              <option value="">Select a type</option>
+              {documentTypes.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div>
-          <label htmlFor="file">File (PDF, JPG, or PNG)</label>
-          <input
-            id="file"
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            onChange={(e) => setFile(e.target.files[0])}
-            required
-          />
-        </div>
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="originDepartment">Origin department</label>
+            <select
+              id="originDepartment"
+              className={styles.select}
+              value={originDepartmentId}
+              onChange={(e) => setOriginDepartmentId(e.target.value)}
+              required
+            >
+              <option value="">Select a department</option>
+              {departments.map((dept) => (
+                <option key={dept.id} value={dept.id}>
+                  {dept.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="file">File</label>
+            <div className={styles.fileInputWrapper}>
+              <input
+                id="file"
+                type="file"
+                className={styles.fileInput}
+                accept=".pdf,.jpg,.jpeg,.png"
+                onChange={(e) => setFile(e.target.files[0])}
+                required
+              />
+              <p className={styles.fileHint}>PDF, JPG, or PNG — max 10MB</p>
+            </div>
+          </div>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Creating...' : 'Create document'}
-        </button>
-      </form>
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+            {isSubmitting ? 'Creating...' : 'Create document'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
