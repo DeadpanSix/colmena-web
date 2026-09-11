@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import DocumentsPage from './pages/DocumentsPage';
 import DocumentDetailPage from './pages/DocumentDetailPage';
+import CreateDocumentPage from './pages/CreateDocumentPage';
 import DashboardPage from './pages/DashboardPage';
 
 function ProtectedRoute({ children }) {
@@ -35,6 +36,7 @@ function App() {
         >
           <Route path="/" element={<HomePage />} />
           <Route path="/documents" element={<DocumentsPage />} />
+          <Route path="/documents/new" element={<CreateDocumentPage />} />
           <Route path="/documents/:id" element={<DocumentDetailPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
         </Route>
