@@ -1,16 +1,94 @@
-# React + Vite
+# Colmena Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React frontend for the Colmena document management system — document routing between teams, response tracking, and status dashboards.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework**: React 19 (Vite)
+- **Routing**: React Router
+- **HTTP client**: Axios
+- **Charts**: Chart.js (via react-chartjs-2)
+- **Styling**: CSS Modules
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 22+
+- [colmena-api](../colmena-api) running locally or deployed
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### Environment variables
+
+Copy `.env.example` to `.env`:
+
+\`\`\`
+VITE_API_URL=http://localhost:4000/api
+\`\`\`
+
+Point this to your backend's URL (local or deployed).
+
+### Running the app
+
+\`\`\`bash
+npm run dev
+\`\`\`
+
+App runs on `http://localhost:5173` by default.
+
+### Building for production
+
+\`\`\`bash
+npm run build
+\`\`\`
+
+Output goes to `dist/`.
+
+## Project Structure
+
+\`\`\`
+src/
+├── api/           # API calls, grouped by resource (auth, documents, catalogs, dashboard)
+├── components/     # Reusable components (Layout, RoutingForm)
+├── context/         # AuthContext (session state)
+├── pages/           # Route-level views
+└── App.jsx          # Route definitions
+\`\`\`
+
+## Authentication
+
+- Access token held in memory (not `localStorage`), attached to requests via an axios interceptor
+- Refresh token lives in an httpOnly cookie, set and read automatically by the backend
+- On app load, the session is silently restored via `/auth/refresh` + `/auth/me`
+
+## Pages
+
+| Route | Description | Access |
+|---|---|---|
+| `/login` | Login form | Public |
+| `/` | Welcome/home page | Authenticated |
+| `/documents` | List of all documents | Authenticated |
+| `/documents/new` | Create a document (file upload) | Authenticated |
+| `/documents/:id` | Document detail: routing, response, cancel | Authenticated |
+| `/dashboard` | Global stats (admin) or team-scoped stats (team member) | Authenticated |
+
+## Styling
+
+CSS Modules, co-located with each component (`Component.jsx` + `Component.module.css`). No global design system yet — styling is applied incrementally per page.
+
+## Known Limitations
+
+- No automated tests
+- No pagination on the documents list
+- No client-side form validation beyond HTML5 `required`/`type` attributes
+
+## Branching Strategy
+
+- `main` — stable, deployable code
+- `develop` — integration branch
+- `feature/*` — one branch per module, merged into `develop` via pull request
